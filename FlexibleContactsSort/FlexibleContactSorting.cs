@@ -120,7 +120,7 @@ namespace FlexibleContactsSort
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(ContactsDialog.OnCommonUpdate))]
+        [HarmonyPatch("OnCommonUpdate")]
         private static void Prefix(ref bool ___sortList, out bool __state)
         {
             // steal the sortList bool's value, and force it to false from Resonite's perspective

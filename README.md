@@ -1,7 +1,7 @@
 Flexible Contacts Sort
 ======================
 
-A [MonkeyLoader](https://github.com/MonkeyModdingTroop/MonkeyLoader) mod for [Resonite](https://resonite.com/) that sorts contacts Better™ and to your liking.
+A [MonkeyLoader](https://github.com/MonkeyModdingTroop/MonkeyLoader) mod for [Resonite](https://resonite.com/) that sorts contacts Better™ and to your liking, including pinning your favorites to the top..
 
 Semi-relevant Resonite issue: [#41](https://github.com/Yellow-Dog-Man/Resonite-Issues/issues/41).
 
@@ -25,18 +25,20 @@ I've made a few noteworthy changes to the sorting order:
 4. Even further ties broken by username alphabetical order
 
 ### Default Modded Sort
-Sort Order can be changed to liking. Ordering of friends can additionally include sorting by whether
-a contact is in a world you can just join.
+Sort Order can be changed to liking - this is just the default:
 
-0. Neos Bot
-1. Unread messages and pinned contacts
-2. Incoming Friend Requests
-3. Online status
-   1. Online Friends
-   2. Away Friends
-   3. Busy Friends
-   
-4. Sent Requests (background color changed from gray to yellow!)
-5. Offline Friends
-6. Search results
-7. Remaining ties broken by username alphabetical order
+0. Your Account
+1. Resonite Bot
+2. Unread messages
+3. Pinned contacts
+3. Incoming contacts requests
+4. Contacts in joinable sessions
+5. Online status
+   1. Online
+   2. Away
+   3. Busy
+6. Headless hosts
+7. Sent Requests (background color changed from gray to yellow!)
+8. Offline Friends
+9. Search results
+10. Remaining ties broken by Username+UserId alphabetical order
