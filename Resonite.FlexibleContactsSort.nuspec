@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Resonite.FlexibleContactsSort</id>
+    <version>0.1.0-beta</version>
+    <title>Flexible Contacts Sort</title>
+    <authors>Banane9</authors>
+    <owners>Banane9</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      This Game Pack for MonkeyLoader provides basic hooks for modding the game Resonite,
+      which uses FrooxEngine. It provides hooks for the beginning of initialization,
+      when initialization is done, and when the game shuts down.
+    </description>
+    <readme>README.md</readme>
+    <license type="expression">LGPL-3.0-or-later</license>
+    <projectUrl>https://github.com/Banane9/ResoniteFlexibleContactsSort</projectUrl>
+    <repository type="git" url="https://github.com/Banane9/ResoniteFlexibleContactsSort.git" />
+    <tags>mod mods modding mod loader harmony unity game games mono config configuration nuget logging monkeyloader resonite</tags>
+
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.2">
+        <dependency id="MonkeyLoader" version="0.3.0-beta" />
+        <dependency id="MonkeyLoader.GamePacks.Resonite" version="0.3.1-beta" />
+      </group>
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file
+      src="README.md"
+      target="README.md" />
+
+    <file
+      src="FlexibleContactsSort\bin\Release\net472\FlexibleContactsSort.dll"
+      target="lib\net462\FlexibleContactsSort.dll" />
+    <file
+      src="FlexibleContactsSort\bin\Release\net472\FlexibleContactsSort.xml"
+      target="lib\net462\FlexibleContactsSort.xml" />
+    <file
+      src="FlexibleContactsSort\bin\Release\net472\FlexibleContactsSort.pdb"
+      target="lib\net462\FlexibleContactsSort.pdb" />
+  </files>
+</package>

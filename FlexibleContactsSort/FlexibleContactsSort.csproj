@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyTitle>FlexibleContactsSort</AssemblyTitle>
+    <AssemblyFileName>$(AssemblyTitle).dll</AssemblyFileName>
+    <RootNamespace>FlexibleContactsSort</RootNamespace>
+  </PropertyGroup>
+
+  <Target Name="PackProject" AfterTargets="PostBuildEvent">
+    <MSBuild Projects="$(MSBuildProjectFile)" Properties="NuPkgName=Resonite.FlexibleContactsSort" Targets="PackNugetPkg">
+    </MSBuild>
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="MonkeyLoader" Version="0.3.0-beta" />
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.3.1-beta" />
+    <PackageReference Include="PolySharp" Version="1.14.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Lib.Harmony" Version="2.3.0-prerelease.5" />
+    <PackageReference Include="Krafs.Publicizer" Version="2.2.1" />
+
+    <Reference Include="FrooxEngine">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\FrooxEngine.dll</HintPath>
+    </Reference>
+    <Publicize Include="FrooxEngine" IncludeCompilerGeneratedMembers="false" />
+
+    <Reference Include="Elements.Core">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\Elements.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SkyFrost.Base">
+      <HintPath>$(ResonitePath)\Resonite_Data\Managed\SkyFrost.Base.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
