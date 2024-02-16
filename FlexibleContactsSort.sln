@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexibleContactsSort", "Fle
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07124CF9-EE3D-4A7E-A2F8-8FD07966E423}"
 	ProjectSection(SolutionItems) = preProject
-		Resonite.FlexibleContactsSort.nuspec = Resonite.FlexibleContactsSort.nuspec
-		Resonite.FlexibleContactsSort.Debug.nuspec = Resonite.FlexibleContactsSort.Debug.nuspec
 		README.md = README.md
+		MonkeyLoader.Resonite.FlexibleContactSorting.nuspec = MonkeyLoader.Resonite.FlexibleContactSorting.nuspec
+		MonkeyLoader.Resonite.FlexibleContactSorting.Debug.nuspec = MonkeyLoader.Resonite.FlexibleContactSorting.Debug.nuspec
 	EndProjectSection
 EndProject
 Global
