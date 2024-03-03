@@ -7,6 +7,7 @@ using SkyFrost.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace FlexibleContactsSort
 {
@@ -15,7 +16,8 @@ namespace FlexibleContactsSort
     internal sealed class FlexibleContactSorting : ConfiguredResoniteMonkey<FlexibleContactSorting, ContactsSortingConfig>
     {
         private static readonly Dictionary<ContactItem, string> _contactIds = new();
-        public override string Name => "FlexibleContactsSort";
+
+        private static readonly ConditionalWeakTable<ContactItem, ReadMessageTracker> _contactReadMessageTrackers = new();
 
         protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
 
@@ -60,7 +62,20 @@ namespace FlexibleContactsSort
             };
         }
 
-        private static bool HasUnreadMessages(ContactItem contactItem) => contactItem.HasMessages;
+        private static bool HasUnreadMessages(ContactItem contactItem)
+        {
+            var readMessageTracker = _contactReadMessageTrackers.GetOrCreateValue(contactItem);
+
+            if (contactItem.HasMessages)
+            {
+                readMessageTracker.HasMessages = true;
+                return true;
+            }
+
+            readMessageTracker.HasMessages = false;
+
+            return readMessageTracker.SecondsSinceRead < ConfigSection.ReadMessageCooldown;
+        }
 
         private static bool IsHeadlessHost(ContactItem contactItem)
             => contactItem.Data?.CurrentStatus.SessionType == UserSessionType.Headless;
@@ -147,6 +162,26 @@ namespace FlexibleContactsSort
                 ConfigSection.PinnedContacts.Remove(__instance.SelectedContactId);
                 pinButton.LabelText = "Pin Contact";
             };
+        }
+
+        private sealed class ReadMessageTracker
+        {
+            private bool _hasMessages;
+            private DateTime _readTime = DateTime.MinValue;
+
+            public bool HasMessages
+            {
+                get => _hasMessages;
+                set
+                {
+                    if (_hasMessages && !value)
+                        _readTime = DateTime.UtcNow;
+
+                    _hasMessages = value;
+                }
+            }
+
+            public double SecondsSinceRead => (DateTime.UtcNow - _readTime).TotalSeconds;
         }
     }
 }

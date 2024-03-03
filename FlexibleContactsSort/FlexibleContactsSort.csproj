@@ -12,14 +12,14 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="MonkeyLoader" Version="0.4.0-beta" />
+    <PackageReference Include="MonkeyLoader" Version="0.5.0-beta" />
     <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.4.0-beta" />
     <PackageReference Include="PolySharp" Version="1.14.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Resonite.Elements.Core" Version="1.0.0" />
-    <PackageReference Include="Resonite.FrooxEngine" Version="2024.2.12.1430" />
+    <PackageReference Include="Resonite.FrooxEngine" Version="2024.3.1.1178" />
     <PackageReference Include="Resonite.SkyFrost.Base" Version="1.0.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.2" />
   </ItemGroup>
