@@ -1,15 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>FlexibleContactsSort</AssemblyTitle>
     <AssemblyFileName>$(AssemblyTitle).dll</AssemblyFileName>
     <RootNamespace>FlexibleContactsSort</RootNamespace>
   </PropertyGroup>
 
-  <Target Name="PackProject" AfterTargets="PostBuildEvent">
+  <PropertyGroup>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>MonkeyLoader.Resonite.FlexibleContactSorting</PackageId>
+    <Title>Flexible Contact Sorting</Title>
+    <Authors>Banane9</Authors>
+    <Version>0.3.0-beta</Version>
+    <Description>This MonkeyLoader mod for Resonite allows sorting contacts flexibly and to your liking, including pinning your favorites to the top.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/ResoniteModdingGroup/FlexibleContactsSort</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ResoniteModdingGroup/FlexibleContactsSort.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>mod; mods; monkeyloader; resonite; contacts</PackageTags>
+    <IncludeSymbols>False</IncludeSymbols>
+    <EmbedAllSources>True</EmbedAllSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddSymbolsToPackage</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+
+  <Target Name="AddSymbolsToPackage">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(OutDir)$(AssemblyName).pdb" PackagePath="lib/$(TargetFramework)/" />
+    </ItemGroup>
+  </Target>
+
+  <!-- <Target Name="PackProject" AfterTargets="PostBuildEvent">
     <MSBuild Projects="$(MSBuildProjectFile)" Properties="NuPkgName=MonkeyLoader.Resonite.FlexibleContactSorting" Targets="PackNugetPkg">
     </MSBuild>
+  </Target> -->
+  
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy Condition="'$(CopyToLibraries)'=='true'" SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFiles="$(ResonitePath)\MonkeyLoader\Mods\$(PackageId).nupkg" />
+    <Message Condition="'$(CopyToLibraries)'=='true'" Text="Copied '$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg' to '$(ResonitePath)\MonkeyLoader\Mods\$(PackageId).nupkg'" Importance="high" />
   </Target>
+  
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="" />
+    <None Include="Locale\*" Pack="true" PackagePath="content/Locale/" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MonkeyLoader" Version="0.5.0-beta" />
@@ -18,9 +53,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Resonite.Elements.Core" Version="1.0.0" />
-    <PackageReference Include="Resonite.FrooxEngine" Version="2024.3.1.1178" />
-    <PackageReference Include="Resonite.SkyFrost.Base" Version="1.0.0" />
-    <PackageReference Include="System.Text.Json" Version="8.0.2" />
+    <PackageReference Include="Resonite.Elements.Core" Version="1.0.2" />
+    <PackageReference Include="Resonite.FrooxEngine" Version="2024.3.3.1178" />
+    <PackageReference Include="Resonite.SkyFrost.Base" Version="1.0.2" />
+    <PackageReference Include="System.Text.Json" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

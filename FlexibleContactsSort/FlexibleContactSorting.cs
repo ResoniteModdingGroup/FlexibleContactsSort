@@ -1,4 +1,5 @@
-﻿using FrooxEngine;
+﻿using Elements.Core;
+using FrooxEngine;
 using FrooxEngine.UIX;
 using HarmonyLib;
 using MonkeyLoader.Patching;
@@ -150,17 +151,17 @@ namespace FlexibleContactsSort
             if (__instance.SelectedContact is null || __instance.SelectedContactId == __instance.Cloud.Platform.AppUserId || __instance.SelectedContact.IsSelfContact)
                 return;
 
-            var pinButton = ___actionsUi.Button(ConfigSection.PinnedContacts.Contains(__instance.SelectedContactId) ? "Unpin Contact" : "Pin Contact");
+            var pinButton = ___actionsUi.Button((ConfigSection.PinnedContacts.Contains(__instance.SelectedContactId) ? "FlexibleContactsSort.Unpin" : "FlexibleContactsSort.Pin").AsLocaleKey());
             pinButton.LocalPressed += (button, data) =>
             {
                 if (ConfigSection.PinnedContacts.Add(__instance.SelectedContactId))
                 {
-                    pinButton.LabelText = "Unpin Contact";
+                    ((Text)pinButton.LabelTextField.Parent).LocaleContent = "FlexibleContactsSort.Unpin".AsLocaleKey();
                     return;
                 }
 
                 ConfigSection.PinnedContacts.Remove(__instance.SelectedContactId);
-                pinButton.LabelText = "Pin Contact";
+                ((Text)pinButton.LabelTextField.Parent).LocaleContent = "FlexibleContactsSort.Pin".AsLocaleKey();
             };
         }
 
