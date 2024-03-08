@@ -1,0 +1,8 @@
+{
+  "localeCode": "de",
+  "authors": [ "Banane9" ],
+  "messages": {
+    "FlexibleContactsSort.Pin": "Kontakt anheften",
+    "FlexibleContactsSort.Unpin": "Kontakt lösen"
+  }
+}

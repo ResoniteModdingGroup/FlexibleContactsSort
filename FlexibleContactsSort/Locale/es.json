@@ -1,0 +1,8 @@
+{
+  "localeCode": "es",
+  "authors": [ "Raptoranim" ],
+  "messages": {
+    "FlexibleContactsSort.Pin": "Anclar Contacto",
+    "FlexibleContactsSort.Unpin": "Desanclar Contacto"
+  }
+}

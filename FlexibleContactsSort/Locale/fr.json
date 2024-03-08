@@ -1,0 +1,8 @@
+{
+  "localeCode": "fr",
+  "authors": [ "j4" ],
+  "messages": {
+    "FlexibleContactsSort.Pin": "Épingler le contact",
+    "FlexibleContactsSort.Unpin": "Désépingler le contact"
+  }
+}
