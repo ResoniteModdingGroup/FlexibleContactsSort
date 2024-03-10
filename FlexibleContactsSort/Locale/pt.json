@@ -1,0 +1,8 @@
+{
+  "localeCode": "pt",
+  "authors": [ "LucasRo7" ],
+  "messages": {
+    "FlexibleContactsSort.Pin": "Fixar Contato",
+    "FlexibleContactsSort.Unpin": "Soltar Contato"
+  }
+}
