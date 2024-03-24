@@ -44,11 +44,6 @@ namespace FlexibleContactsSort
             score += (IsHeadlessHost(contactItem) ? 1 : 0) * ConfigSection.HeadlessPriority;
             score += GetOnlineStatusOrder(contactItem) * ConfigSection.OnlineStatusPriority;
 
-            if (_contactIds.TryGetValue(contactItem, out var oldId) && oldId != contact.ContactUserId)
-            {
-                Debug(() => $"ContactItem UserId changed from {oldId} to {contact.ContactUserId}!");
-            }
-
             return score;
         }
 
