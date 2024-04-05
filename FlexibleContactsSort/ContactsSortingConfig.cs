@@ -1,4 +1,5 @@
 ﻿using MonkeyLoader.Configuration;
+using MonkeyLoader.Resonite.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,9 @@ namespace FlexibleContactsSort
         public int AlphabeticPriority => _alphabeticPriorityKey.GetValue();
         public override string Description { get; } = "Contains options for how to sort the Contacts list.";
         public int HeadlessPriority => _headlessPriorityKey.GetValue();
+        public override string Id { get; } = "ContactsSorting";
         public int IncomingContactRequestPriority => _incomingContactRequestPriorityKey.GetValue();
         public int JoinablePriority => _joinablePriorityKey.GetValue();
-        public override string Name { get; } = "ContactsSorting";
         public int OnlineStatusPriority => _onlineStatusPriorityKey.GetValue();
         public int OutgoingContactRequestPriority => _outgoingContactRequestPriorityKey.GetValue();
         public HashSet<string> PinnedContacts => _pinnedContactsKey.GetValue()!;

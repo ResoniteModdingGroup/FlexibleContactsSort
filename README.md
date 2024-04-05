@@ -1,7 +1,7 @@
 Flexible Contacts Sort
 ======================
 
-A [MonkeyLoader](https://github.com/MonkeyModdingTroop/MonkeyLoader) mod for [Resonite](https://resonite.com/) that sorts contacts Better™ and to your liking, including pinning your favorites to the top..
+A [MonkeyLoader](https://github.com/MonkeyModdingTroop/MonkeyLoader) mod for [Resonite](https://resonite.com/) that sorts contacts Better™ and to your liking, including pinning your favorites to the top.
 
 Semi-relevant Resonite issue: [#41](https://github.com/Yellow-Dog-Man/Resonite-Issues/issues/41).
 
