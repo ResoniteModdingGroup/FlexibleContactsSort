@@ -20,9 +20,9 @@ namespace FlexibleContactsSort
         private readonly DefiningConfigKey<int> _readMessageCooldownKey = new("ReadMessageCooldown", "Delay in seconds before a contact with freshly-read messages is counted as such. Set 0 to disable.", () => 120);
 
         public int AlphabeticPriority => _alphabeticPriorityKey.GetValue();
-        public override string Description { get; } = "Contains options for how to sort the Contacts list.";
+        public override string Description => "Contains options for how to sort the Contacts list.";
         public int HeadlessPriority => _headlessPriorityKey.GetValue();
-        public override string Id { get; } = "ContactsSorting";
+        public override string Id => "ContactsSorting";
         public int IncomingContactRequestPriority => _incomingContactRequestPriorityKey.GetValue();
         public int JoinablePriority => _joinablePriorityKey.GetValue();
         public int OnlineStatusPriority => _onlineStatusPriorityKey.GetValue();
