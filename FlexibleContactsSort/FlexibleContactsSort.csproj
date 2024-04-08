@@ -30,11 +30,6 @@
       <TfmSpecificPackageFile Include="$(OutDir)$(AssemblyName).pdb" PackagePath="lib/$(TargetFramework)/" />
     </ItemGroup>
   </Target>
-
-  <!-- <Target Name="PackProject" AfterTargets="PostBuildEvent">
-    <MSBuild Projects="$(MSBuildProjectFile)" Properties="NuPkgName=MonkeyLoader.Resonite.FlexibleContactSorting" Targets="PackNugetPkg">
-    </MSBuild>
-  </Target> -->
   
   <Target Name="CopyPackage" AfterTargets="Pack">
     <Copy Condition="'$(CopyToLibraries)'=='true'" SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFiles="$(ResonitePath)\MonkeyLoader\Mods\$(PackageId).nupkg" />

@@ -14,7 +14,7 @@ namespace FlexibleContactsSort
 {
     [HarmonyPatchCategory(nameof(ExtraContactColoring))]
     [HarmonyPatch(typeof(LegacyUIStyle), nameof(LegacyUIStyle.GetStatusColor))]
-    internal class ExtraContactColoring : ResoniteMonkey<ExtraContactColoring>
+    internal sealed class ExtraContactColoring : ResoniteMonkey<ExtraContactColoring>
     {
         public override string Name { get; } = "ExtraContactColoring";
 

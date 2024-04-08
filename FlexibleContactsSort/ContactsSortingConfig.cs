@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FlexibleContactsSort
 {
-    internal class ContactsSortingConfig : ConfigSection
+    internal sealed class ContactsSortingConfig : ConfigSection
     {
         private readonly DefiningConfigKey<int> _alphabeticPriorityKey = new("AlphabeticPriority", "Priority of the contact's name. Set 0 to ignore; negative to invert.", () => 1);
         private readonly DefiningConfigKey<int> _headlessPriorityKey = new("HeadlessPriority", "Priority of the contact being an active headless host. Set 0 to ignore; negative to invert.", () => 100_000);
