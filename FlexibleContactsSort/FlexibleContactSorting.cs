@@ -20,36 +20,69 @@ namespace FlexibleContactsSort
 
         private static readonly ConditionalWeakTable<ContactItem, ReadMessageTracker> _contactReadMessageTrackers = new();
 
+        internal static int Compare((ContactData?, bool) contactSortInfo1, (ContactData?, bool) contactSortInfo2)
+        {
+            var contact1 = contactSortInfo1.Item1?.Contact;
+            var contact2 = contactSortInfo2.Item1?.Contact;
+
+            // nulls go last, no need to build score
+            if (contact1 is null)
+                return contact2 is null ? 0 : 1;
+
+            if (contact2 is null)
+                return -1;
+
+            var score1 = CalculateOrderScore(contactSortInfo1!);
+            var score2 = CalculateOrderScore(contactSortInfo2!);
+
+            // Compare Username with UserId appended as tie-breaker
+            var alphabetical = string.Compare($"{contact1.ContactUsername}\0{contact1.ContactUserId}", $"{contact2.ContactUsername}\0{contact2.ContactUserId}", StringComparison.InvariantCultureIgnoreCase);
+            score1 += alphabetical * ConfigSection.AlphabeticPriority;
+            score2 -= alphabetical * ConfigSection.AlphabeticPriority;
+
+            return score1 - score2;
+        }
+
         protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
 
-        private static int CalculateOrderScore(ContactItem contactItem)
+        private static int CalculateOrderScore((ContactData, bool) contactSortInfo)
         {
-            var contact = contactItem.Contact;
+            var contactData = contactSortInfo.Item1;
+            var contact = contactData.Contact;
             var pinned = ConfigSection.PinnedContacts.Contains(contact.ContactUserId);
 
-            var score = contact.ContactUserId == contactItem.Cloud.Platform.AppUserId ? -1_002_000_000 : 0;
+            var score = contact.ContactUserId == Engine.Current.Cloud.Platform.AppUserId ? -1_002_000_000 : 0;
             score = contact.IsSelfContact ? -1_001_000_000 : score;
 
-            score += HasUnreadMessages(contactItem) ? -120_000_000 : 0;
+            score += contactSortInfo.Item2 ? -120_000_000 : 0;
             score += pinned ? -110_000_000 : 0;
 
-            score += IsOfflineContact(contactItem) && !IsHeadlessHost(contactItem) ? 100_000_000 : 0; // offline friends before results
+            score += IsOfflineContact(contactData) && !IsHeadlessHost(contactData) ? 100_000_000 : 0; // offline friends before results
             score += contact.ContactStatus == ContactStatus.SearchResult ? 105_000_000 : 0; // non-contact search results always at the end
             score += contact.IsPartiallyMigrated ? 110_000_000 : 0; // partially migrated to the end
 
             score += (IsOutgoingRequest(contact) ? 1 : 0) * ConfigSection.OutgoingContactRequestPriority;
             score += (IsIncomingRequest(contact) ? 1 : 0) * ConfigSection.IncomingContactRequestPriority;
 
-            score += (IsInJoinableSession(contactItem) ? 1 : 0) * ConfigSection.JoinablePriority;
-            score += (IsHeadlessHost(contactItem) ? 1 : 0) * ConfigSection.HeadlessPriority;
-            score += GetOnlineStatusOrder(contactItem) * ConfigSection.OnlineStatusPriority;
+            score += (IsInJoinableSession(contactData) ? 1 : 0) * ConfigSection.JoinablePriority;
+            score += (IsHeadlessHost(contactData) ? 1 : 0) * ConfigSection.HeadlessPriority;
+            score += GetOnlineStatusOrder(contactData) * ConfigSection.OnlineStatusPriority;
 
             return score;
         }
 
-        private static int GetOnlineStatusOrder(ContactItem item)
+        private static int Compare(Slot slot1, Slot slot2)
         {
-            return (item.Data?.CurrentStatus.OnlineStatus).GetValueOrDefault() switch
+            var contactItem1 = slot1.GetComponent<ContactItem>();
+            var contactItem2 = slot2.GetComponent<ContactItem>();
+
+            return Compare((contactItem1?.Data, contactItem1?.HasMessages ?? false),
+                    (contactItem2?.Data, contactItem2?.HasMessages ?? false));
+        }
+
+        private static int GetOnlineStatusOrder(ContactData contactData)
+        {
+            return (contactData?.CurrentStatus.OnlineStatus).GetValueOrDefault() switch
             {
                 OnlineStatus.Online => 1,
                 OnlineStatus.Away => 2,
@@ -73,70 +106,42 @@ namespace FlexibleContactsSort
             return readMessageTracker.SecondsSinceRead < ConfigSection.ReadMessageCooldown;
         }
 
-        private static bool IsHeadlessHost(ContactItem contactItem)
-            => contactItem.Data?.CurrentStatus.SessionType == UserSessionType.Headless;
+        private static bool IsHeadlessHost(ContactData contactData)
+            => contactData?.CurrentStatus.SessionType == UserSessionType.Headless;
 
         private static bool IsIncomingRequest(Contact contact)
             => contact.ContactStatus == ContactStatus.Requested;
 
-        private static bool IsInJoinableSession(ContactItem contactItem)
-            => contactItem.Data?.CurrentSessionInfo is SessionInfo session
+        private static bool IsInJoinableSession(ContactData contactData)
+            => contactData?.CurrentSessionInfo is SessionInfo session
             && session.CompatibilityHash == Engine.Current.CompatibilityHash
-            && !IsHeadlessHost(contactItem);
+            && !IsHeadlessHost(contactData);
 
-        private static bool IsOfflineContact(ContactItem contactItem)
+        private static bool IsOfflineContact(ContactData contactData)
         {
-            var status = contactItem.Data?.CurrentStatus.OnlineStatus ?? OnlineStatus.Offline;
-
-            return (contactItem.Contact.ContactStatus == ContactStatus.Accepted
-                && contactItem.Contact.IsAccepted && status == OnlineStatus.Offline)
-                || status == OnlineStatus.Invisible;
+            return contactData.Contact.ContactStatus == ContactStatus.Accepted
+                && contactData.Contact.IsAccepted && contactData.CurrentStatus.OnlineStatus is OnlineStatus.Offline or OnlineStatus.Invisible;
         }
 
         private static bool IsOutgoingRequest(Contact contact)
             => contact.ContactStatus == ContactStatus.Accepted && !contact.IsAccepted;
 
         [HarmonyPostfix]
-        [HarmonyPatch("OnCommonUpdate")]
-        private static void Postfix(bool __state, SyncRef<Slot> ____listRoot)
+        [HarmonyPatch(nameof(ContactsDialog.OnCommonUpdate))]
+        private static void OnCommonUpdatePostfix(ContactsDialog __instance, bool __state)
         {
             // Sort only if Resonite would have sorted (but we prevented it)
-            if (!__state)
-                return;
-
-            ____listRoot.Target.SortChildren((slot1, slot2) =>
-            {
-                var contactItem1 = slot1.GetComponent<ContactItem>();
-                var contactItem2 = slot2.GetComponent<ContactItem>();
-                var contact1 = contactItem1?.Contact;
-                var contact2 = contactItem2?.Contact;
-
-                // nulls go last, no need to build score
-                if (contact1 is null)
-                    return contact2 is null ? 0 : 1;
-
-                if (contact2 is null)
-                    return -1;
-
-                var score1 = CalculateOrderScore(contactItem1!);
-                var score2 = CalculateOrderScore(contactItem2!);
-
-                // Compare Username with UserId appended as tie-breaker
-                var alphabetical = string.Compare($"{contact1.ContactUsername}\0{contact1.ContactUserId}", $"{contact2.ContactUsername}\0{contact2.ContactUserId}", StringComparison.InvariantCultureIgnoreCase);
-                score1 += alphabetical * ConfigSection.AlphabeticPriority;
-                score2 -= alphabetical * ConfigSection.AlphabeticPriority;
-
-                return score1 - score2;
-            });
+            if (__state && LagFreeContactsLoading.AllowSorting)
+                __instance._listRoot.Target.SortChildren(Compare);
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch("OnCommonUpdate")]
-        private static void Prefix(ref bool ___sortList, out bool __state)
+        [HarmonyPatch(nameof(ContactsDialog.OnCommonUpdate))]
+        private static void OnCommonUpdatePrefix(ContactsDialog __instance, out bool __state)
         {
             // steal the sortList bool's value, and force it to false from Resonite's perspective
-            __state = ___sortList;
-            ___sortList = false;
+            __state = __instance.sortList;
+            __instance.sortList = false;
         }
 
         [HarmonyPostfix]
