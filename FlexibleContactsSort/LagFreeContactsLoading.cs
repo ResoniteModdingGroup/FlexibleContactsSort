@@ -1,4 +1,5 @@
-﻿using FrooxEngine;
+﻿using Elements.Core;
+using FrooxEngine;
 using HarmonyLib;
 using MonkeyLoader.Patching;
 using MonkeyLoader.Resonite;
@@ -17,6 +18,8 @@ namespace FlexibleContactsSort
     [HarmonyPatch(typeof(ContactsDialog), nameof(ContactsDialog.OnAttach))]
     internal sealed class LagFreeContactsLoading : ResoniteMonkey<LagFreeContactsLoading>
     {
+        private const int ContactsPerUpdate = 8;
+
         internal static bool AllowSorting { get; private set; } = true;
 
         protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
@@ -37,11 +40,17 @@ namespace FlexibleContactsSort
 
                 await default(ToWorld);
 
-                foreach (var (contactData, _) in contactsSortInfo)
+                var segments = contactsSortInfo.Length / ContactsPerUpdate;
+                for (var segment = 0; segment < segments; ++segment)
                 {
-                    contactsDialog.UpdateContactItem(contactData);
+                    for (var i = 0; i <= ContactsPerUpdate; ++i)
+                        contactsDialog.UpdateContactItem(contactsSortInfo[ContactsPerUpdate * segment + i].contactData);
+
                     await default(NextUpdate);
                 }
+
+                for (var i = segments * ContactsPerUpdate; i < contactsSortInfo.Length; ++i)
+                    contactsDialog.UpdateContactItem(contactsSortInfo[i].contactData);
 
                 AllowSorting = true;
             });
