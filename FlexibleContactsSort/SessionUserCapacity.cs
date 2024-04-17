@@ -16,10 +16,15 @@ namespace FlexibleContactsSort
     [HarmonyPatch(typeof(SessionItem), nameof(SessionItem.Update))]
     internal sealed class SessionUserCapacity : ConfiguredResoniteMonkey<SessionUserCapacity, SessionCapacityConfig>
     {
+        public override bool CanBeDisabled => true;
+
         protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
 
         private static void Postfix(SessionItem __instance, SessionInfo session)
         {
+            if (!Enabled)
+                return;
+
             var format = "{0} ({1})";
 
             if (ConfigSection.ShowUserCapacityInSessionList)

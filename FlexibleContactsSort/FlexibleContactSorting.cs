@@ -20,6 +20,8 @@ namespace FlexibleContactsSort
 
         private static readonly ConditionalWeakTable<ContactItem, ReadMessageTracker> _contactReadMessageTrackers = new();
 
+        public override bool CanBeDisabled => true;
+
         internal static int Compare((ContactData?, bool) contactSortInfo1, (ContactData?, bool) contactSortInfo2)
         {
             var contact1 = contactSortInfo1.Item1?.Contact;
@@ -139,9 +141,15 @@ namespace FlexibleContactsSort
         [HarmonyPatch(nameof(ContactsDialog.OnCommonUpdate))]
         private static void OnCommonUpdatePrefix(ContactsDialog __instance, out bool __state)
         {
+            if (!Enabled)
+            {
+                __state = false;
+                return;
+            }
+
             // steal the sortList bool's value, and force it to false from Resonite's perspective
             __state = __instance.sortList;
-            __instance.sortList = false;
+            __instance.sortList &= !Enabled;
         }
 
         [HarmonyPostfix]
