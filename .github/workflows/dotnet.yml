@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish-docs:
+  build:
     runs-on: ubuntu-latest
     steps:
     # Setup environment
