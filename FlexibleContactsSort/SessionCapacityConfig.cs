@@ -19,6 +19,7 @@ namespace FlexibleContactsSort
         public colorX EmptySessionColor => _emptySessionColorKey.GetValue();
         public colorX FullSessionColor => _fullSessionColorKey.GetValue();
         public override string Id => "SessionCapacity";
+        public override string Name => "Session Capacity";
         public bool ShowUsageLevelWithColorGradient => _showUsageLevelWithColorGradientKey.GetValue();
         public bool ShowUserCapacityInSessionList => _showUserCapacityInSessionListKey.GetValue();
         public override Version Version { get; } = new(1, 0, 0);
