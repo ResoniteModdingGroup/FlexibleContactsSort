@@ -19,7 +19,11 @@ namespace FlexibleContactsSort
         private readonly DefiningConfigKey<int> _onlineStatusPriorityKey = new("OnlineStatusPriority", "Priority of the contact's online status. Set 0 to ignore; negative to invert.", () => 1_000);
         private readonly DefiningConfigKey<int> _outgoingContactRequestPriorityKey = new("OutgoingContactRequestPriority", "Priority of the contact being an outgoing request. Set 0 to ignore; negative to invert.", () => 1_000_000);
         private readonly DefiningConfigKey<HashSet<string>> _pinnedContactsKey = new("PinnedContacts", "List of Contacts to always keep at the top.", () => new(), internalAccessOnly: true);
-        private readonly QuantifiedDefiningConfigKey<int, Time> _readMessageCooldownKey = new("ReadMessageCooldown", new UnitConfiguration("s", "F0", " ", new[] { "m", "s" }), null, "Delay before a contact with freshly-read messages is counted as such. Set 0 to disable.", () => 120, 0, int.MaxValue);
+
+        private readonly DefiningConfigKey<int> _readMessageCooldownKey = new("ReadMessageCooldown", "Delay before a contact with freshly-read messages is counted as such. Set 0 to disable.", () => 120)
+        {
+            new ConfigKeyQuantity<int, Time>(new UnitConfiguration("s", "0", " ", new[] { "m", "s" }), null, 0, int.MaxValue )
+        };
 
         public int AlphabeticPriority => _alphabeticPriorityKey.GetValue();
         public override string Description => "Contains options for how to sort the Contacts list.";
