@@ -86,10 +86,11 @@ namespace FlexibleContactsSort
         {
             return (contactData?.CurrentStatus.OnlineStatus).GetValueOrDefault() switch
             {
-                OnlineStatus.Online => 1,
-                OnlineStatus.Away => 2,
-                OnlineStatus.Busy => 3,
-                _ => 4,
+                OnlineStatus.Sociable => 1,
+                OnlineStatus.Online => 2,
+                OnlineStatus.Away => 3,
+                OnlineStatus.Busy => 4,
+                _ => 5,
             };
         }
 

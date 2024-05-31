@@ -11,8 +11,8 @@
     <PackageId>FlexibleContactSorting</PackageId>
     <Title>Flexible Contact Sorting</Title>
     <Authors>Banane9</Authors>
-    <Version>0.4.2-beta</Version>
-    <Description>This MonkeyLoader mod for Resonite allows sorting contacts flexibly and to your liking, including pinning your favorites to the top.</Description>
+    <Version>0.5.0-beta</Version>
+    <Description>This MonkeyLoader mod for Resonite allows sorting contacts flexibly and to your liking, including pinning your favorites to the top. It also adds other Quality of Life features to the Contacts Page, such as a clear button for the search, an extra color for your outgoing conctact requests, capacity display to contacts' sessions, and contacts loading without lag.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ResoniteModdingGroup/FlexibleContactsSort</PackageProjectUrl>
@@ -42,16 +42,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonkeyLoader" Version="0.16.3-beta" />
-    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.15.1-beta" />
+    <PackageReference Include="MonkeyLoader" Version="0.16.4-beta" />
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.15.2-beta" />
     <PackageReference Include="PolySharp" Version="1.14.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Resonite.Elements.Core" Version="1.0.2" />
     <PackageReference Include="Resonite.Elements.Quantity" Version="1.0.2" />
-    <PackageReference Include="Resonite.FrooxEngine" Version="2024.4.32.495" />
-    <PackageReference Include="Resonite.SkyFrost.Base" Version="1.0.2" />
+    <PackageReference Include="Resonite.FrooxEngine" Version="2024.5.31.202" />
+    <PackageReference Include="Resonite.SkyFrost.Base" Version="1.0.3" />
     <PackageReference Include="System.Text.Json" Version="8.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
