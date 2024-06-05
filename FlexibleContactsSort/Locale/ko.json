@@ -1,0 +1,8 @@
+{
+  "localeCode": "ko",
+  "authors": [ "Sinduy" ],
+  "messages": {
+    "FlexibleContactsSort.Pin": "연락처 고정",
+    "FlexibleContactsSort.Unpin": "연락처 고정해제"
+  }
+}
