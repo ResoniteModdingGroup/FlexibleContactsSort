@@ -117,7 +117,6 @@ namespace FlexibleContactsSort
 
         private static bool IsInJoinableSession(ContactData contactData)
             => contactData?.CurrentSessionInfo is SessionInfo session
-            && session.CompatibilityHash == Engine.Current.CompatibilityHash
             && !IsHeadlessHost(contactData);
 
         private static bool IsOfflineContact(ContactData contactData)
