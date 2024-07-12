@@ -16,6 +16,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ResoniteModdingGroup/FlexibleContactsSort</PackageProjectUrl>
+    <PackageTags>mod; mods; monkeyloader; resonite; contacts</PackageTags>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
