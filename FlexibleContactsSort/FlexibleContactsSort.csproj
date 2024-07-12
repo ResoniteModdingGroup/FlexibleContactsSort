@@ -16,21 +16,8 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ResoniteModdingGroup/FlexibleContactsSort</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ResoniteModdingGroup/FlexibleContactsSort.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>mod; mods; monkeyloader; resonite; contacts</PackageTags>
-    <IncludeSymbols>False</IncludeSymbols>
-    <EmbedAllSources>True</EmbedAllSources>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddSymbolsToPackage</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
 
-  <Target Name="AddSymbolsToPackage">
-    <ItemGroup>
-      <TfmSpecificPackageFile Include="$(OutDir)$(AssemblyName).pdb" PackagePath="lib/$(TargetFramework)/" />
-    </ItemGroup>
-  </Target>
-  
   <Target Name="CopyPackage" AfterTargets="Pack">
     <Copy Condition="'$(CopyToLibraries)'=='true'" SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFiles="$(ResonitePath)\MonkeyLoader\Mods\$(PackageId).nupkg" />
     <Message Condition="'$(CopyToLibraries)'=='true'" Text="Copied '$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg' to '$(ResonitePath)\MonkeyLoader\Mods\$(PackageId).nupkg'" Importance="high" />
@@ -43,12 +30,12 @@
 
   <ItemGroup>
     <PackageReference Include="MonkeyLoader" Version="0.19.1-beta" />
-    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.17.0-beta" />
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.17.1-beta" />
     <PackageReference Include="PolySharp" Version="1.14.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Resonite.Elements.Core" Version="1.0.2" />
+    <PackageReference Include="Resonite.Elements.Core" Version="1.1.0" />
     <PackageReference Include="Resonite.Elements.Quantity" Version="1.0.2" />
     <PackageReference Include="Resonite.FrooxEngine" Version="2024.7.11.1293" />
     <PackageReference Include="Resonite.SkyFrost.Base" Version="2.0.0" />
