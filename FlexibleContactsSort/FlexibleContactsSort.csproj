@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>FlexibleContactsSort</AssemblyTitle>
     <AssemblyFileName>$(AssemblyTitle).dll</AssemblyFileName>
     <RootNamespace>FlexibleContactsSort</RootNamespace>
@@ -11,7 +10,7 @@
     <PackageId>FlexibleContactSorting</PackageId>
     <Title>Flexible Contact Sorting</Title>
     <Authors>Banane9</Authors>
-    <Version>0.6.0-beta</Version>
+    <Version>0.7.0-beta</Version>
     <Description>This MonkeyLoader mod for Resonite allows sorting contacts flexibly and to your liking, including pinning your favorites to the top. It also adds other Quality of Life features to the Contacts Page, such as a clear button for the search, an extra color for your outgoing conctact requests, capacity display to contacts' sessions, and contacts loading without lag.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
@@ -30,16 +29,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonkeyLoader" Version="0.19.1-beta" />
-    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.17.1-beta" />
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.19.2-beta" />
     <PackageReference Include="PolySharp" Version="1.14.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Resonite.Elements.Core" Version="1.1.0" />
-    <PackageReference Include="Resonite.Elements.Quantity" Version="1.0.2" />
-    <PackageReference Include="Resonite.FrooxEngine" Version="2024.7.11.1293" />
-    <PackageReference Include="Resonite.SkyFrost.Base" Version="2.0.0" />
-    <PackageReference Include="Resonite.SkyFrost.Base.Models" Version="2.0.0" />
+    <PackageReference Include="Resonite.Elements.Core" Version="1.2.1" />
+    <PackageReference Include="Resonite.Elements.Quantity" Version="1.2.1" />
+    <PackageReference Include="Resonite.FrooxEngine" Version="2024.8.6.1341" />
+    <PackageReference Include="Resonite.SkyFrost.Base" Version="2.0.1" />
+    <PackageReference Include="Resonite.SkyFrost.Base.Models" Version="2.0.1" />
   </ItemGroup>
 </Project>
