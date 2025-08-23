@@ -16,8 +16,6 @@ namespace FlexibleContactsSort
     [HarmonyPatch(typeof(ContactsDialog), nameof(ContactsDialog.OnAttach))]
     internal sealed class ClearContactsSearch : ResoniteMonkey<ClearContactsSearch>
     {
-        protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
-
         private static void Postfix(ContactsDialog __instance)
         {
             var searchEditor = __instance._searchBar.Target;

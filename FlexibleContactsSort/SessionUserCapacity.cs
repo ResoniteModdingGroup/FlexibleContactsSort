@@ -18,8 +18,6 @@ namespace FlexibleContactsSort
     {
         public override bool CanBeDisabled => true;
 
-        protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
-
         private static void Postfix(SessionItem __instance, SessionInfo session)
         {
             if (!Enabled)
