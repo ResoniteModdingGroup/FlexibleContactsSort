@@ -19,8 +19,6 @@ namespace FlexibleContactsSort
         public override bool CanBeDisabled => true;
         public override string Name { get; } = "ExtraContactColoring";
 
-        protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
-
         private static void Postfix(Contact contact, ContactData status, bool text, ref colorX __result)
         {
             if (Enabled && contact.ContactStatus == ContactStatus.Accepted && !contact.IsAccepted)

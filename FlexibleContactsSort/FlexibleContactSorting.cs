@@ -45,8 +45,6 @@ namespace FlexibleContactsSort
             return score1 - score2;
         }
 
-        protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
-
         private static int CalculateOrderScore((ContactData, bool) contactSortInfo)
         {
             var contactData = contactSortInfo.Item1;
