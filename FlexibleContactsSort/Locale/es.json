@@ -2,7 +2,7 @@
   "localeCode": "es",
   "authors": [ "Raptoranim" ],
   "messages": {
-    "FlexibleContactsSort.Pin": "Anclar Contacto",
-    "FlexibleContactsSort.Unpin": "Desanclar Contacto"
+    "FlexibleContactSorting.Pin": "Anclar Contacto",
+    "FlexibleContactSorting.Unpin": "Desanclar Contacto"
   }
 }

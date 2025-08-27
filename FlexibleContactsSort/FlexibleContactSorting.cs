@@ -2,7 +2,6 @@
 using FrooxEngine;
 using FrooxEngine.UIX;
 using HarmonyLib;
-using MonkeyLoader.Patching;
 using MonkeyLoader.Resonite;
 using SkyFrost.Base;
 using System;
@@ -16,9 +15,11 @@ namespace FlexibleContactsSort
     [HarmonyPatchCategory(nameof(FlexibleContactSorting))]
     internal sealed class FlexibleContactSorting : ConfiguredResoniteMonkey<FlexibleContactSorting, ContactsSortingConfig>
     {
-        private static readonly Dictionary<ContactItem, string> _contactIds = new();
+        private static readonly ConditionalWeakTable<ContactItem, ActivityTracker> _activityTrackersByContact = [];
+        private static readonly Dictionary<ContactItem, string> _contactIds = [];
 
-        private static readonly ConditionalWeakTable<ContactItem, ReadMessageTracker> _contactReadMessageTrackers = new();
+        private static readonly LocaleString _pinString = Mod.GetLocaleString("Pin");
+        private static readonly LocaleString _unpinString = Mod.GetLocaleString("Unpin");
 
         public override bool CanBeDisabled => true;
 
@@ -73,6 +74,9 @@ namespace FlexibleContactsSort
 
         private static int Compare(Slot slot1, Slot slot2)
         {
+            if (slot1.ActiveSelf ^ slot2.ActiveSelf)
+                return slot1.ActiveSelf ? -1 : 1;
+
             var contactItem1 = slot1.GetComponent<ContactItem>();
             var contactItem2 = slot2.GetComponent<ContactItem>();
 
@@ -94,7 +98,7 @@ namespace FlexibleContactsSort
 
         private static bool HasUnreadMessages(ContactItem contactItem)
         {
-            var readMessageTracker = _contactReadMessageTrackers.GetOrCreateValue(contactItem);
+            var readMessageTracker = _activityTrackersByContact.GetOrCreateValue(contactItem);
 
             if (contactItem.HasMessages)
             {
@@ -114,7 +118,7 @@ namespace FlexibleContactsSort
             => contact.ContactStatus == ContactStatus.Requested;
 
         private static bool IsInJoinableSession(ContactData contactData)
-            => contactData?.CurrentSessionInfo is SessionInfo session
+            => contactData?.CurrentSessionInfo is not null
             && !IsHeadlessHost(contactData);
 
         private static bool IsOfflineContact(ContactData contactData)
@@ -130,9 +134,36 @@ namespace FlexibleContactsSort
         [HarmonyPatch(nameof(ContactsDialog.OnCommonUpdate))]
         private static void OnCommonUpdatePostfix(ContactsDialog __instance, bool __state)
         {
+            if (!__state || !LagFreeContactsLoading.AllowSorting)
+                return;
+
+            if (string.IsNullOrWhiteSpace(__instance._searchBar.Target.Text.Content))
+            {
+                if (ConfigSection.HideOffline)
+                {
+                    foreach (var contactSlot in __instance._listRoot.Target.Children)
+                    {
+                        var contactItem = contactSlot.GetComponent<ContactItem>();
+
+                        if (contactItem?.Data is null)
+                            continue;
+
+                        var activityTracker = _activityTrackersByContact.GetOrCreateValue(contactItem);
+                        var isOffline = activityTracker.IsOffline = IsOfflineContact(contactItem.Data);
+
+                        contactSlot.ActiveSelf = !isOffline || activityTracker.SecondsSinceOffline < ConfigSection.OfflineCooldown
+                            || (ConfigSection.KeepPinnedOffline && ConfigSection.PinnedContacts.Contains(contactItem.Data.Contact.ContactUserId));
+                    }
+                }
+                else
+                {
+                    foreach (var contactSlot in __instance._listRoot.Target.Children)
+                        contactSlot.ActiveSelf = true;
+                }
+            }
+
             // Sort only if Resonite would have sorted (but we prevented it)
-            if (__state && LagFreeContactsLoading.AllowSorting)
-                __instance._listRoot.Target.SortChildren(Compare);
+            __instance._listRoot.Target.SortChildren(Compare);
         }
 
         [HarmonyPrefix]
@@ -151,29 +182,32 @@ namespace FlexibleContactsSort
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch("UpdateSelectedContact")]
+        [HarmonyPatch(nameof(ContactsDialog.UpdateSelectedContactUI))]
         private static void UpdateSelectedContactPostfix(ContactsDialog __instance, UIBuilder ___actionsUi)
         {
             if (__instance.SelectedContact is null || __instance.SelectedContactId == __instance.Cloud.Platform.AppUserId || __instance.SelectedContact.IsSelfContact)
                 return;
 
-            var pinButton = ___actionsUi.Button((ConfigSection.PinnedContacts.Contains(__instance.SelectedContactId) ? "FlexibleContactsSort.Unpin" : "FlexibleContactsSort.Pin").AsLocaleKey());
+            var pinButton = ___actionsUi.Button(ConfigSection.PinnedContacts.Contains(__instance.SelectedContactId) ? _unpinString : _pinString);
             pinButton.LocalPressed += (button, data) =>
             {
                 if (ConfigSection.PinnedContacts.Add(__instance.SelectedContactId))
                 {
-                    ((Text)pinButton.LabelTextField.Parent).LocaleContent = "FlexibleContactsSort.Unpin".AsLocaleKey();
+                    ((Text)pinButton.LabelTextField.Parent).LocaleContent = _unpinString;
                     return;
                 }
 
                 ConfigSection.PinnedContacts.Remove(__instance.SelectedContactId);
-                ((Text)pinButton.LabelTextField.Parent).LocaleContent = "FlexibleContactsSort.Pin".AsLocaleKey();
+                ((Text)pinButton.LabelTextField.Parent).LocaleContent = _pinString;
             };
         }
 
-        private sealed class ReadMessageTracker
+        private sealed class ActivityTracker
         {
             private bool _hasMessages;
+            private bool _isOffline = true;
+
+            private DateTime _offlineTime = DateTime.MinValue;
             private DateTime _readTime = DateTime.MinValue;
 
             public bool HasMessages
@@ -187,6 +221,20 @@ namespace FlexibleContactsSort
                     _hasMessages = value;
                 }
             }
+
+            public bool IsOffline
+            {
+                get => _isOffline;
+                set
+                {
+                    if (_isOffline && !value)
+                        _offlineTime = DateTime.UtcNow;
+
+                    _isOffline = value;
+                }
+            }
+
+            public double SecondsSinceOffline => (DateTime.UtcNow - _offlineTime).TotalSeconds;
 
             public double SecondsSinceRead => (DateTime.UtcNow - _readTime).TotalSeconds;
         }
