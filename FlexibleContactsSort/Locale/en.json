@@ -2,7 +2,7 @@
   "localeCode": "en",
   "authors": [ "Banane9" ],
   "messages": {
-    "FlexibleContactsSort.Pin": "Pin Contact",
-    "FlexibleContactsSort.Unpin": "Unpin Contact"
+    "FlexibleContactSorting.Pin": "Pin Contact",
+    "FlexibleContactSorting.Unpin": "Unpin Contact"
   }
 }

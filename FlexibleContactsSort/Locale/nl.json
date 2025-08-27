@@ -2,7 +2,7 @@
   "localeCode": "nl",
   "authors": [ "zahndy" ],
   "messages": {
-    "FlexibleContactsSort.Pin": "Contact Vastpinnen",
-    "FlexibleContactsSort.Unpin": "Contact Losmaken"
+    "FlexibleContactSorting.Pin": "Contact Vastpinnen",
+    "FlexibleContactSorting.Unpin": "Contact Losmaken"
   }
 }

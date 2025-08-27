@@ -21,9 +21,8 @@ namespace FlexibleContactsSort
         private const int ContactsPerUpdate = 8;
 
         public override bool CanBeDisabled => true;
-        internal static bool AllowSorting { get; private set; } = true;
 
-        protected override IEnumerable<IFeaturePatch> GetFeaturePatches() => Enumerable.Empty<IFeaturePatch>();
+        internal static bool AllowSorting { get; private set; } = true;
 
         private static void AddContactItems(ContactsDialog contactsDialog)
             => contactsDialog.StartTask(async () =>

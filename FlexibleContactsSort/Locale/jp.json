@@ -2,7 +2,7 @@
   "localeCode": "jp",
   "authors": [ "Aesc" ],
   "messages": {
-    "FlexibleContactsSort.Pin": "ピン留めする",
-    "FlexibleContactsSort.Unpin": "ピン留めを外す"
+    "FlexibleContactSorting.Pin": "ピン留めする",
+    "FlexibleContactSorting.Unpin": "ピン留めを外す"
   }
 }
