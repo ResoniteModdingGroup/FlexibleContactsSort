@@ -145,14 +145,15 @@ namespace FlexibleContactsSort
                     {
                         var contactItem = contactSlot.GetComponent<ContactItem>();
 
-                        if (contactItem?.Data is null)
+                        if (contactItem?.Data?.Contact is not Contact contact)
                             continue;
 
                         var activityTracker = _activityTrackersByContact.GetOrCreateValue(contactItem);
                         var isOffline = activityTracker.IsOffline = IsOfflineContact(contactItem.Data);
 
                         contactSlot.ActiveSelf = !isOffline || activityTracker.SecondsSinceOffline < ConfigSection.OfflineCooldown
-                            || (ConfigSection.KeepPinnedOffline && ConfigSection.PinnedContacts.Contains(contactItem.Data.Contact.ContactUserId));
+                            || contact.IsSelfContact || contact.ContactUserId == Engine.Current.Cloud.Platform.AppUserId || HasUnreadMessages(contactItem)
+                            || (ConfigSection.KeepPinnedOffline && ConfigSection.PinnedContacts.Contains(contact.ContactUserId));
                     }
                 }
                 else

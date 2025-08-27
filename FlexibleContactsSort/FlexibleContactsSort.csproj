@@ -10,7 +10,7 @@
     <PackageId>FlexibleContactSorting</PackageId>
     <Title>Flexible Contact Sorting</Title>
     <Authors>Banane9</Authors>
-    <Version>0.8.0-beta</Version>
+    <Version>0.8.1-beta</Version>
     <Description>This MonkeyLoader mod for Resonite allows sorting contacts flexibly and to your liking, including pinning your favorites to the top. It also adds other Quality of Life features to the Contacts Page, such as a clear button for the search, an extra color for your outgoing conctact requests, capacity display to contacts' sessions, and contacts loading without lag.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
