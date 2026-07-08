@@ -80,8 +80,8 @@ namespace FlexibleContactsSort
             var contactItem1 = slot1.GetComponent<ContactItem>();
             var contactItem2 = slot2.GetComponent<ContactItem>();
 
-            return Compare((contactItem1?.Data, contactItem1?.HasMessages ?? false),
-                    (contactItem2?.Data, contactItem2?.HasMessages ?? false));
+            return Compare((contactItem1?.Data, HasUnreadMessages(contactItem1)),
+                    (contactItem2?.Data, HasUnreadMessages(contactItem2)));
         }
 
         private static int GetOnlineStatusOrder(ContactData contactData)
@@ -96,8 +96,11 @@ namespace FlexibleContactsSort
             };
         }
 
-        private static bool HasUnreadMessages(ContactItem contactItem)
+        private static bool HasUnreadMessages(ContactItem? contactItem)
         {
+            if (contactItem is null)
+                return false;
+
             var readMessageTracker = _activityTrackersByContact.GetOrCreateValue(contactItem);
 
             if (contactItem.HasMessages)
