@@ -74,7 +74,7 @@ jobs:
         name: NuGet Packages
         if-no-files-found: error
         retention-days: 7
-        path: ./FlexibleContactsSort.nupkg
+        path: ./FlexibleContactsSorting.nupkg
     
     # Only when it's not from a PR to avoid any funny packages in the cache
     - name: Save NuGet Package Cache
