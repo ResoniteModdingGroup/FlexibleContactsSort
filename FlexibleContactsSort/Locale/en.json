@@ -2,6 +2,64 @@
   "localeCode": "en",
   "authors": [ "Banane9" ],
   "messages": {
+    "FlexibleContactSorting.Name": "Flexible Contact Sorting",
+    "FlexibleContactSorting.Description": "This mod allows sorting contacts flexibly and to your liking, including pinning your favorites to the top. It also adds other Quality of Life features to the Contacts Page, such as a clear button for the search, an extra color for your outgoing conctact requests, capacity display to contacts' sessions, and contacts loading without lag.",
+
+    "FlexibleContactSorting.ClearContactsSearch.Name": "Clear Contacts Search",
+    "FlexibleContactSorting.ClearContactsSearch.Description": "Adds a clear button to the searchbar on the contacts tab.",
+
+    "FlexibleContactSorting.ExtraContactColoring.Name": "Extra Contact Coloring",
+    "FlexibleContactSorting.ExtraContactColoring.Description": "Adds yellow coloring to outgoing contact requests.",
+
+    "FlexibleContactSorting.FlexibleContactSorting.Name": "Flexible Contact Sorting",
+    "FlexibleContactSorting.FlexibleContactSorting.Description": "Sorts the contacts list based on the <i>Contact Sorting</i> settings.",
+
+    "FlexibleContactSorting.LagFreeContactsLoading.Name": "Lag-Free Contacts Loading",
+    "FlexibleContactSorting.LagFreeContactsLoading.Description": "Loads and applies updates to the contacts lists in blocks so the game doesn't freeze.",
+
+    "FlexibleContactSorting.SessionUserCapacity.Name": "Session User Capacity",
+    "FlexibleContactSorting.SessionUserCapacity.Description": "Indicates the maximum user capacity on sessions that contacts are in and / or color it based on the currently used capacity. For this, the <i>Session Capacity</i> settings are used.",
+
+    "FlexibleContactSorting.Config.ContactsSorting.Name": "Contact Sorting",
+    "FlexibleContactSorting.Config.ContactsSorting.AlphabeticPriority.Name": "Alphabetic Priority",
+    "FlexibleContactSorting.Config.ContactsSorting.AlphabeticPriority.Description": "Priority of the contact's name.<size=50%><br/><br/></size>Set to 0 to ignore; negative to invert.",
+    "FlexibleContactSorting.Config.ContactsSorting.HeadlessPriority.Name": "Headless Priority",
+    "FlexibleContactSorting.Config.ContactsSorting.HeadlessPriority.Description": "Priority of the contact being an active headless host.<size=50%><br/><br/></size>Set to 0 to ignore; negative to invert.",
+    "FlexibleContactSorting.Config.ContactsSorting.IncomingContactRequestPriority.Name": "Incoming Contact Request Priority",
+    "FlexibleContactSorting.Config.ContactsSorting.IncomingContactRequestPriority.Description": "Priority of the contact being an incoming request.<size=50%><br/><br/></size>Set to 0 to ignore; negative to invert.",
+    "FlexibleContactSorting.Config.ContactsSorting.JoinablePriority.Name": "Joinable Priority",
+    "FlexibleContactSorting.Config.ContactsSorting.JoinablePriority.Description": "Priority of the contact being in a session you can join.<size=50%><br/><br/></size>Set to 0 to ignore; negative to invert.",
+    "FlexibleContactSorting.Config.ContactsSorting.OnlineStatusPriority.Name": "Online Status Priority",
+    "FlexibleContactSorting.Config.ContactsSorting.OnlineStatusPriority.Description": "Priority of the contact's online status.<size=50%><br/><br/></size>Set to 0 to ignore; negative to invert.",
+    "FlexibleContactSorting.Config.ContactsSorting.OutgoingContactRequestPriority.Name": "Outgoing Contact Request Priority",
+    "FlexibleContactSorting.Config.ContactsSorting.OutgoingContactRequestPriority.Description": "Priority of the contact being an outgoing request.<size=50%><br/><br/></size>Set to 0 to ignore; negative to invert.",
+    "FlexibleContactSorting.Config.ContactsSorting.PinnedContacts.Name": "Pinned Contacts",
+    "FlexibleContactSorting.Config.ContactsSorting.PinnedContacts.Description": "List of Contacts to always keep at the top.",
+
+    "FlexibleContactSorting.Config.ContactsSorting.Cooldowns.Name": "Cooldowns",
+    "FlexibleContactSorting.Config.ContactsSorting.OfflineCooldown.Name": "Offline Cooldown",
+    "FlexibleContactSorting.Config.ContactsSorting.OfflineCooldown.Description": "Delay before a contact that has just gone offline is counted as such.<size=50%><br/><br/></size>Set to 0 to disable.",
+    "FlexibleContactSorting.Config.ContactsSorting.ReadMessageCooldown.Name": "Read Message Cooldown",
+    "FlexibleContactSorting.Config.ContactsSorting.ReadMessageCooldown.Description": "Delay before a contact with freshly-read messages is counted as such.<size=50%><br/><br/></size>Set to 0 to disable.",
+
+    "FlexibleContactSorting.Config.ContactsSorting.OfflineHiding.Name": "Hiding of Offline Contacts",
+    "FlexibleContactSorting.Config.ContactsSorting.HideOffline.Name": "Hide Offline",
+    "FlexibleContactSorting.Config.ContactsSorting.HideOffline.Description": "Hide offline contacts completely.",
+    "FlexibleContactSorting.Config.ContactsSorting.KeepPinnedOffline.Name": "Keep Pinned",
+    "FlexibleContactSorting.Config.ContactsSorting.KeepPinnedOffline.Description": "Do not hide pinned contacts, even if they're offline.",
+
+    "FlexibleContactSorting.Config.SessionCapacity.Name": "Session Capacity",
+    "FlexibleContactSorting.Config.SessionCapacity.ShowUserCapacityInSessionList.Name": "Show User Capacity In Session List",
+    "FlexibleContactSorting.Config.SessionCapacity.ShowUserCapacityInSessionList.Description": "Show the user capacity of contacts' joinable sessions.",
+
+    "FlexibleContactSorting.Config.SessionCapacity.Gradient.Name": "Gradient",
+    "FlexibleContactSorting.Config.SessionCapacity.ShowUsageLevelWithColorGradient.Name": "Show Usage Level With Color Gradient",
+    "FlexibleContactSorting.Config.SessionCapacity.ShowUsageLevelWithColorGradient.Description": "Color the user count based on capacity usage.",
+    "FlexibleContactSorting.Config.SessionCapacity.EmptySessionColor.Name": "Empty Session Color",
+    "FlexibleContactSorting.Config.SessionCapacity.EmptySessionColor.Description": "Color of the user count when only the host is there.",
+    "FlexibleContactSorting.Config.SessionCapacity.FullSessionColor.Name": "Full Session Color",
+    "FlexibleContactSorting.Config.SessionCapacity.FullSessionColor.Description": "Color of the user count when the session is full.",
+
     "FlexibleContactSorting.Pin": "Pin Contact",
     "FlexibleContactSorting.Unpin": "Unpin Contact"
   }

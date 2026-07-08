@@ -1,14 +1,8 @@
 ﻿using Elements.Core;
 using FrooxEngine;
 using HarmonyLib;
-using MonkeyLoader.Patching;
 using MonkeyLoader.Resonite;
 using SkyFrost.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlexibleContactsSort
 {
@@ -17,7 +11,6 @@ namespace FlexibleContactsSort
     internal sealed class ExtraContactColoring : ResoniteMonkey<ExtraContactColoring>
     {
         public override bool CanBeDisabled => true;
-        public override string Name { get; } = "ExtraContactColoring";
 
         private static void Postfix(Contact contact, ContactData status, bool text, ref colorX __result)
         {
