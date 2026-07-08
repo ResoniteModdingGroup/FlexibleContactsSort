@@ -1,21 +1,13 @@
-﻿using Elements.Assets;
-using FrooxEngine;
+﻿using FrooxEngine;
 using HarmonyLib;
-using MonkeyLoader.Patching;
 using MonkeyLoader.Resonite;
 using SkyFrost.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlexibleContactsSort
 {
+    [HarmonyPatch(typeof(ContactsDialog))]
     [HarmonyPatchCategory(nameof(LagFreeContactsLoading))]
-    [HarmonyPatch(typeof(ContactsDialog), nameof(ContactsDialog.OnAttach))]
     internal sealed class LagFreeContactsLoading : ResoniteMonkey<LagFreeContactsLoading>
     {
         private const int ContactsPerUpdate = 8;
@@ -89,7 +81,7 @@ namespace FlexibleContactsSort
             return instructions;
         }
 
-        private static bool RemoveItem(ContactItem contact, string? searchTerm, bool clear)
+        private static bool RemoveItem(ContactItem contact, string searchTerm, bool clear)
         {
             if (clear || !(contact.Username.StartsWith(searchTerm)
                 || contact.AlternateNames.Any(name => name.StartsWith(searchTerm, StringComparison.InvariantCulture))))
@@ -110,7 +102,7 @@ namespace FlexibleContactsSort
 
             __instance.StartTask(async () =>
             {
-                var searchTerm = editor.TargetString?.Trim().ToLower();
+                var searchTerm = editor.TargetString?.Trim().ToLower() ?? "";
                 var clear = string.IsNullOrWhiteSpace(searchTerm);
 
                 var segments = __instance._searchResultItems.Count / ContactsPerUpdate;
